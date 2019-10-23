@@ -20,9 +20,30 @@ class Scraper
   end
 
   def self.scrape_profile_page(profile_url)
-    # :name, :location, :twitter, :linkedin, :github, :blog, :profile_quote, :bio, :profile_url
-    student = {}
-    doc = Nokogiri::HTML(open(index_url))
+    # :name DONE, :location DONE, :twitter, :linkedin, :github, :blog, :profile_quote DONE, :bio DONE, :profile_url DONE
+    student_hash = {:profile_url => profile_url}
+    doc = Nokogiri::HTML(open(profile_url))
+    vitals = doc.css(".vitals-container")
+    vitals.each do |info|
+      v_text = info.css(".vitals-text-container")
+      social = info.css(".social-icon-container")
+      student_hash[:name] = v_text.css(".profile-name").text.strip
+      student_hash[:location] = v_text.css(".profile-location").text.strip
+      student_hash[:profile_quote] = v_text.css(".profile-quote").text.strip
+      social.each do |a_tags|
+        binding.pry
+      end
+      student_hash[:twitter] = a_tags.css("a").attribute("href").value if a_tags.css("a").attribute("href").value.include?('twitter')
+      student_hash[:linkedin] = a_tags.css("a").attribute("href").value if a_tags.css("a").attribute("href").value.include?('linkedin')
+      student_hash[:github] = a_tags.css("a").attribute("href").value if a_tags.css("a").attribute("href").value.include?('github')
+        #binding.pry
+    end
+    details = doc.css(".details-container")
+    details.each do |info|
+      student_hash[:bio] = info.css("div.bio-content.content-holder div.description-holder p").text.strip
+    end
+    
+    student_hash
     
   end
 
