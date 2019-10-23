@@ -51,7 +51,7 @@ class Scraper
     details.each do |info|
       student_info[:bio] = info.css("div.bio-content.content-holder div.description-holder p").text.strip
     end
-    binding.pry
+
     student_info
     
   end
