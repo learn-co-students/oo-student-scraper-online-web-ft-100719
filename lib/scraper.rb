@@ -24,10 +24,10 @@ class Scraper
 
   def self.scrape_profile_page(profile_url)
     @@student_profile_hash = {}
-    #html = open(index_url)
-    html = open("https://learn-co-curriculum.github.io/student-scraper-test-page/students/dakota-lee-martinez.html")
+    html = open(profile_url)
+    
     doc = Nokogiri::HTML(html)
-    @@student_profile_hash[:quote] = doc.css(".vitals-text-container > .profile-quote").text
+    
    
     doc.css(".social-icon-container > a").each do |socmed| 
       url = socmed.attribute("href").value
@@ -36,12 +36,16 @@ class Scraper
       elsif url.include?("twitter")
         @@student_profile_hash[:twitter] = url
       elsif url.include?("github")
-        @@student_profile_hash[:twitter] = url
+        @@student_profile_hash[:github] = url
+      elsif url.include?("http:")
+        @@student_profile_hash[:blog] = url
       end
-      binding.pry
+      
     end 
-    
-    
+    @@student_profile_hash[:quote] = doc.css(".vitals-text-container > .profile-quote").text
+    @@student_profile_hash[:bio] = doc.css(".bio-content.content-holder > .description-holder > p").text
+   #binding.pry
+   @@student_profile_hash
   end
 end
 

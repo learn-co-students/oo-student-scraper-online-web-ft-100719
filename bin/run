@@ -6,5 +6,5 @@ require_relative "../lib/command_line_interface.rb"
 what_to_scrape = "https://learn-co-curriculum.github.io/student-scraper-test-page/students/ryan-johnson.html"
 #"https://learn-co-curriculum.github.io/student-scraper-test-page/index.html"
 
-Scraper.scrape_profile_page(what_to_scrape)
-#CommandLineInterface.new.run
+
+CommandLineInterface.new.run
