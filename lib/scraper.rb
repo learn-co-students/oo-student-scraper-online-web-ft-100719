@@ -5,31 +5,44 @@ require 'nokogiri'
 
 class Scraper
 
+  @@student_array = []
   def self.scrape_index_page(index_url)
+    
     
     html = open(index_url)
     doc = Nokogiri::HTML(html)
     
-    
-    x = doc.css(".roster-cards-container").css(".student-card")
-    binding.pry
-    #doc.css(".roster-cards-container").css(".student-card").each do |student|
-    #doc.css(".roster-cards-container").each |each_student_card|
-      student_card.css("div").attributes("id").text
-      #student = Student.new
-      #  student.profile_page = 
-      
-      profile_page = student.css("a href").text
-      student_name = student.css("h4 student-name").text
-    #   binding.pry 
-    # end
-    
-  end
+    doc.css(".roster-cards-container > .student-card").each do |each_student| 
+      student_summary = {}
+      student_summary[:name] = each_student.css(".student-name").text
+      student_summary[:location] = each_student.css(".student-location").text
+      student_summary[:profile_url] = each_student.css("a").attribute("href").value
+      @@student_array << student_summary
+    end #each
+    @@student_array
+  end #scrape_index_page
 
   def self.scrape_profile_page(profile_url)
+    @@student_profile_hash = {}
+    #html = open(index_url)
+    html = open("https://learn-co-curriculum.github.io/student-scraper-test-page/students/dakota-lee-martinez.html")
+    doc = Nokogiri::HTML(html)
+    @@student_profile_hash[:quote] = doc.css(".vitals-text-container > .profile-quote").text
+   
+    doc.css(".social-icon-container > a").each do |socmed| 
+      url = socmed.attribute("href").value
+      if url.include?("linkedin")
+        @@student_profile_hash[:linkedin] = url
+      elsif url.include?("twitter")
+        @@student_profile_hash[:twitter] = url
+      elsif url.include?("github")
+        @@student_profile_hash[:twitter] = url
+      end
+      binding.pry
+    end 
+    
     
   end
-
 end
 
 
