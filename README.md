@@ -51,6 +51,7 @@ affecting our scraper code.
 
 ## Instructions
 
+
 Run `bundle install` first.
 
 ### The `Scraper` Class
