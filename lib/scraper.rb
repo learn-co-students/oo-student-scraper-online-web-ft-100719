@@ -42,7 +42,7 @@ class Scraper
       end
       
     end 
-    @@student_profile_hash[:quote] = doc.css(".vitals-text-container > .profile-quote").text
+    @@student_profile_hash[:profile_quote] = doc.css(".vitals-text-container > .profile-quote").text
     @@student_profile_hash[:bio] = doc.css(".bio-content.content-holder > .description-holder > p").text
    #binding.pry
    @@student_profile_hash
