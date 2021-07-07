@@ -10,7 +10,8 @@ class CommandLineInterface
     make_students
     add_attributes_to_students
     display_students
-  end
+  end 
+  
 
   def make_students
     students_array = Scraper.scrape_index_page(BASE_PATH + 'index.html')
@@ -37,5 +38,6 @@ class CommandLineInterface
       puts "----------------------".colorize(:green)
     end
   end
+  
 
 end
